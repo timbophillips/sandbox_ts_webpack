@@ -20,7 +20,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "TS + Webpack Barebones"
+      inject: false,
+      template: require("html-webpack-template"),
     })
   ],
   output: {
