@@ -5,7 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   },
   "homepage": "https://github.com/timbophillips/_sandbox_ts_webpack#readme",
   "devDependencies": {
+    "ts-loader": "^6.0.0",
+    "typescript": "^3.4.5",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2"
   },
