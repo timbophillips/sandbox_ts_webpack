@@ -1,8 +1,6 @@
 function component() {
     const element = document.createElement('div');
-  
-    element.innerHTML = "Hello typescript on webpack";
-  
+    element.innerHTML = "text goes here";
     return element;
   }
   
