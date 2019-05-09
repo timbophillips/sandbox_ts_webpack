@@ -20,8 +20,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      inject: false,
-      template: require("html-webpack-template"),
+      title: 'timmy poo ',
+      template: '!!ejs-loader!src/index.html'
     })
   ],
   output: {
