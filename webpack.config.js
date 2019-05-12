@@ -24,8 +24,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "timmy poo "
-      // template: '!!ejs-loader!src/index.html'
+      title: "timmy poo ",
+      template: '!!ejs-loader!src/index.html'
     })
   ],
   output: {
