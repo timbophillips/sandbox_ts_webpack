@@ -1,18 +1,16 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './style.css';
 
-import * as gridHTML from './grid.html';
+// my utils.ts file
+import { addHTMLtoDocument } from "./utils";
 
-console.log(gridHTML);
+// my css file
+import "./style.css";
 
-function component() {
-  const element = document.createElement("div");
-  // element.innerHTML = /*html*/ `<p class="lead"> ben </p>`;
-  element.innerHTML = gridHTML;
-  return element;
-}
+// my HTML
+import * as gridHTML from "./grid.html";
 
-document.body.appendChild(component());
-
-console.log("why o why");
+addHTMLtoDocument({
+  html: gridHTML,
+  document: document
+})
