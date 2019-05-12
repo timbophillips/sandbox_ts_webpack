@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.ts",
+  // entry: "./src/index.ts",
   devtool: "inline-source-map",
   devServer: {
     contentBase: "./dist"
@@ -10,12 +10,22 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
         use: "ts-loader",
         exclude: /node_modules/
       },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader',
+          // options: {
+          //   attrs: [':data-src']
+          // }
+        }
       }
     ]
   },
@@ -24,8 +34,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "timmy poo ",
-      template: '!!ejs-loader!src/index.html'
+      title: "Typescript Webpack Barebones",
     })
   ],
   output: {
