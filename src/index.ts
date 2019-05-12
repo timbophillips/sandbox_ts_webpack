@@ -2,13 +2,13 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // my utils.ts file
-import { addHTMLtoDocument } from "./utils";
+import { addHTMLtoDocument } from "./ts/utils";
 
 // my css file
-import "./style.css";
+import "./styles/style.css";
 
 // my HTML
-import * as gridHTML from "./grid.html";
+import * as gridHTML from "./html/grid.html";
 
 addHTMLtoDocument({
   html: gridHTML,
