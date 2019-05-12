@@ -12,6 +12,10 @@ module.exports = {
       {
         use: "ts-loader",
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
@@ -20,8 +24,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'timmy poo ',
-      template: '!!ejs-loader!src/index.html'
+      title: "timmy poo "
+      // template: '!!ejs-loader!src/index.html'
     })
   ],
   output: {
