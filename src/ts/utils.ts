@@ -1,4 +1,4 @@
-const addHTMLtoDocument = ({
+const addDivToDocument = ({
   html,
   document
 }: {
@@ -14,4 +14,20 @@ const addHTMLtoDocument = ({
   return document.body.appendChild(component());
 };
 
-export { addHTMLtoDocument };
+const addHtmlToDivsByClass = ({
+  outerElement,
+  className,
+  html
+}: {
+  outerElement: HTMLElement;
+  className: string;
+  html: string;
+}): HTMLCollectionOf<Element> => {
+  const items = outerElement.getElementsByClassName(className);
+  for (let item of items) {
+    item.innerHTML = html;
+  }
+  return items;
+};
+
+export { addDivToDocument, addHtmlToDivsByClass };
