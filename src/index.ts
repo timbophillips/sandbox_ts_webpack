@@ -25,7 +25,6 @@ addHtmlToDivsByClass({
 
 // when button1 is clicked do something
 document.getElementsByName("button1").item(0).onclick = () => {
-  console.log("1");
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
