@@ -8,7 +8,7 @@ import { addDivToDocument, addHtmlToDivsByClass } from "./ts/utils";
 import "./styles/style.css";
 
 // my HTML
-import * as gridHTML from "./html/grid.html";
+import * as gridHTML from "./html/barebones.html";
 
 // add HTML to document as new <div>
 const newDiv = addDivToDocument({
@@ -20,7 +20,7 @@ const newDiv = addDivToDocument({
 addHtmlToDivsByClass({
   outerElement: newDiv,
   className: "target",
-  html: /*html*/ "<samp>ts code output goes here</samp>"
+  html: /*html*/ `<samp>ts code output goes here</samp>`
 });
 
 // when button1 is clicked do something
@@ -28,7 +28,7 @@ document.getElementsByName("button1").item(0).onclick = () => {
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "target",
-    html: /*html*/ "<samp>, and so on and so forth</samp>"
+    html: /*html*/ `<samp>, and so on and so forth</samp>`
   });
 };
 
@@ -37,6 +37,6 @@ document.getElementsByName("button2").item(0).onclick = () => {
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "target",
-    html: /*html*/ "<samp>, this could go forever</samp>"
+    html: /*html*/ `<samp>, this could go forever</samp>`
   });
 };
