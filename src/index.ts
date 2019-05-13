@@ -19,6 +19,6 @@ const newDiv = addDivToDocument({
 // write testing 456 in all "target" elements
 addHtmlToDivsByClass({
   outerElement: newDiv,
-  className: "target",
-  html: "testing 456"
+  className:"target",
+  html: /*html*/'<samp>ts code output goes here</samp>'
 })
