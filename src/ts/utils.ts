@@ -25,7 +25,7 @@ const addHtmlToDivsByClass = ({
 }): HTMLCollectionOf<Element> => {
   const items = outerElement.getElementsByClassName(className);
   for (let item of items) {
-    item.innerHTML = html;
+    item.innerHTML += html;
   }
   return items;
 };
