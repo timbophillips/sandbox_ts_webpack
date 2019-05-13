@@ -19,15 +19,16 @@ const newDiv = addDivToDocument({
 // write testing 456 in all "target" elements
 addHtmlToDivsByClass({
   outerElement: newDiv,
-  className: "target",
+  className: "output-box",
   html: /*html*/ `<samp>ts code output goes here</samp>`
 });
 
 // when button1 is clicked do something
 document.getElementsByName("button1").item(0).onclick = () => {
+  console.log("1");
   addHtmlToDivsByClass({
     outerElement: newDiv,
-    className: "target",
+    className: "output-box",
     html: /*html*/ `<samp>, and so on and so forth</samp>`
   });
 };
@@ -36,7 +37,7 @@ document.getElementsByName("button1").item(0).onclick = () => {
 document.getElementsByName("button2").item(0).onclick = () => {
   addHtmlToDivsByClass({
     outerElement: newDiv,
-    className: "target",
+    className: "output-box",
     html: /*html*/ `<samp>, this could go forever</samp>`
   });
 };
