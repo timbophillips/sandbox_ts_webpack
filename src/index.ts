@@ -1,6 +1,8 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { rxdbtest } from "./ts/rxdb-test";
+
 // my utils.ts file
 import { addDivToDocument, addHtmlToDivsByClass } from "./ts/utils";
 
@@ -40,3 +42,5 @@ document.getElementsByName("button2").item(0).onclick = () => {
     html: /*html*/ `<samp>, this could go forever</samp>`
   });
 };
+
+const x = new rxdbtest();
