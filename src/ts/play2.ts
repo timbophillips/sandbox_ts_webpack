@@ -25,7 +25,7 @@ class Collection<T extends AnyJson> {
     // adding a document, typechecked to be same as json schema type T
     // the doctype and modstamp are then added
     addDocument(doc: T): T & hbDbFields {
-        const hbDoc = Object.assign(doc, { doctype: this.doctype, modstamp: Date.now().toLocaleString() });
+        const hbDoc = Object.assign(doc, { doctype: this.doctype, modstamp: (new Date).toJSON() });
         this._documents.push(hbDoc);
         return hbDoc;
     }
