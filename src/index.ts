@@ -2,6 +2,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { doSomeStuff } from "./ts/playground";
+import {Collection, testFunction} from "./ts/generics";
 
 // my utils.ts file
 import { addDivToDocument, addHtmlToDivsByClass } from "./ts/utils";
@@ -36,7 +37,7 @@ document.getElementsByName("button1").item(0).onclick = () => {
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
-    html: y.db.openingMsg + "<br/>"
+    html: testFunction() + "<br/>"
   });
 };
 
