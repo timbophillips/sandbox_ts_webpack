@@ -2,7 +2,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { doSomeStuff } from "./ts/playground";
-import { Collection, testFunction } from "./ts/generics";
+import { Collection } from "./ts/generics";
 
 // my utils.ts file
 import { addDivToDocument, addHtmlToDivsByClass } from "./ts/utils";

@@ -45,49 +45,4 @@ export class Collection<T extends AnyJson> {
   }
 }
 
-export function testFunction(): string {
-  type qType = {
-    greeting: string;
-    firstname: string;
-  };
 
-  let q = new Collection<qType>("legends");
-
-  let qDoc: qType = {
-    greeting: "hello",
-    firstname: "timothy"
-  };
-
-  let qDoc2 = {
-    greeting: "ciao",
-    firstname: "sarah",
-    doctype: "poo",
-    modstamp: "1234456356456"
-  };
-
-  let qDoc3 = {
-    greeting: "gday",
-    firstname: "john",
-    doctype: "poo",
-    modstamp: "1234456356456"
-  };
-
-  let notQDoc = {
-    greeter: "bonjour",
-    firstname: "ben"
-  };
-
-  q.addDocument(qDoc);
-  q.addDocument(qDoc2);
-
-  // this fails
-  // q.addDocument(notQDoc);
-
-  // this won't change the actual documents because we use JSON.parse(JSON.stringify()) in the code
-  q.documents[0].firstname = "fuck this";
-
-  console.log(q.documents);
-  q.logdocs();
-
-  return JSON.stringify(q.documents);
-}
