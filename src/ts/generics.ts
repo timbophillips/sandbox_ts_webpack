@@ -28,7 +28,7 @@ export class Collection<T extends AnyJson> {
 
   logdocs(): string {
     const log =
-      "docs logged from inside the class \l\n" + JSON.stringify(this._documents);
+      "docs logged from inside the class \n" + JSON.stringify(this._documents);
     console.log(log);
     return log;
   }
