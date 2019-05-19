@@ -26,9 +26,11 @@ export class Collection<T extends AnyJson> {
     return JSON.parse(JSON.stringify(this._documents));
   }
 
-  logdocs() {
-    console.log("docs from the guts...");
-    console.log(this._documents);
+  logdocs(): string {
+    const log =
+      "docs logged from inside the class \l\n" + JSON.stringify(this._documents);
+    console.log(log);
+    return log;
   }
 
   // adding a document, typechecked to be same as json schema type T
@@ -84,11 +86,8 @@ export function testFunction(): string {
   // this won't change the actual documents because we use JSON.parse(JSON.stringify()) in the code
   q.documents[0].firstname = "fuck this";
 
- 
   console.log(q.documents);
   q.logdocs();
 
   return JSON.stringify(q.documents);
-
 }
-

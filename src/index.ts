@@ -22,6 +22,8 @@ const newDiv = addDivToDocument({
 
 let y = new doSomeStuff();
 
+let myCollection:  Collection<any>;
+
 // write testing 456 in all "target" elements
 addHtmlToDivsByClass({
   outerElement: newDiv,
@@ -30,36 +32,39 @@ addHtmlToDivsByClass({
 });
 
 // when button1 is clicked do something
-document.getElementsByName("button1").item(0).onclick = () => {
-  const box = document.getElementsByName("dbname")[0] as HTMLInputElement;
-  const dbname = box.value;
-  y.initDB(dbname);
+document.getElementsByName("createCollection").item(0).onclick = () => {
+  const box = document.getElementsByName("collection-name")[0] as HTMLInputElement;
+  const colName = box.value;
+  myCollection = new Collection<{ firstname: string; lastname: string; age: number}>(colName)
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
-    html: testFunction() + "<br/>"
+    html: myCollection.logdocs() + "<br/>"
   });
 };
 
 // when button2 is clicked do something else
-document.getElementsByName("button2").item(0).onclick = () => {
-  const box = document.getElementsByName("colname")[0] as HTMLInputElement;
-  const colname = box.value;
-  const z = y.createCollection<{ firstname: string; age: number }>(colname)
-  addHtmlToDivsByClass({
-    outerElement: newDiv,
-    className: "output-box",
-    html: z.openingMsg + "<br/>"
-  });
+document.getElementsByName("addDocument").item(0).onclick = () => {
+  const boxFn = document.getElementsByName("firstname")[0] as HTMLInputElement;
+  const boxLn = document.getElementsByName("lastname")[0] as HTMLInputElement;
+  const boxAge = document.getElementsByName("age")[0] as HTMLInputElement;
+  const firstname = boxFn.value;
+  const lastname = boxLn.value;
+  const age = boxAge.value;
+
+  myCollection.addDocument({
+    firstname: firstname,
+    lastname: lastname,
+    age: age
+  })
+
 };
 
 // when button2 is clicked do something else
-document.getElementsByName("button3").item(0).onclick = () => {
-  let a: string = "";
-  y.collectionNamesInDb.map(x => (a += x + "<br/>"));
+document.getElementsByName("outputCollection").item(0).onclick = () => {
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
-    html: a + "<br/>"
+    html: myCollection.logdocs() + "<br/>"
   });
 };
