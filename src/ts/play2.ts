@@ -20,7 +20,12 @@ class Collection<T extends AnyJson> {
     }
     // returns the array of documents
     // ** TODO: make this read only (how best to do that?)
-    get documents(): Array<T & hbDbFields> { return this._documents }
+    get documents(): Array<T & hbDbFields> { return JSON.parse(JSON.stringify(this._documents) )}
+
+    logdocs() {
+        console.log("docs from the guts...");
+        console.log(this._documents)
+    }
 
     // adding a document, typechecked to be same as json schema type T
     // the doctype and modstamp are then added
@@ -47,8 +52,14 @@ let qDoc2 = {
     greeting: "ciao",
     firstname: "sarah",
     doctype: "poo",
-    weird: "is it?",
-    modstamp: 1234456356456
+    modstamp: "1234456356456"
+};
+
+let qDoc3 = {
+    greeting: "gday",
+    firstname: "john",
+    doctype: "poo",
+    modstamp: "1234456356456"
 };
 
 let notQDoc = {
@@ -62,5 +73,10 @@ q.addDocument(qDoc2);
 // this fails
 // q.addDocument(notQDoc);
 
+// this won't change the actual documents because we use JSON.parse(JSON.stringify()) in the code
+q.documents[0].firstname="fuck this"
+
 console.log(JSON.stringify(q.documents));
 console.log(q.documents);
+
+q.logdocs();
