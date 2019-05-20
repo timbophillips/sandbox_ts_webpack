@@ -2,7 +2,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { doSomeStuff } from "./ts/playground";
-import { Collection } from "./ts/generics";
+import { Collection, Database } from "./ts/generics";
 
 // my utils.ts file
 import { addDivToDocument, addHtmlToDivsByClass } from "./ts/utils";
@@ -22,6 +22,7 @@ const newDiv = addDivToDocument({
 let y = new doSomeStuff();
 
 let myCollection: Collection<any>;
+let myDatabase: Database;
 
 // write testing 456 in all "target" elements
 addHtmlToDivsByClass({
@@ -31,12 +32,27 @@ addHtmlToDivsByClass({
 });
 
 // when button1 is clicked do something
+document.getElementsByName("createDatabase").item(0).onclick = () => {
+  const box = document.getElementsByName(
+    "database-name"
+  )[0] as HTMLInputElement;
+  const dbName = box.value;
+  myDatabase = new Database(dbName);
+  addHtmlToDivsByClass({
+    outerElement: newDiv,
+    className: "output-box",
+    html: myDatabase.message + "<br/>"
+  });
+};
+
+
+// when button1 is clicked do something
 document.getElementsByName("createCollection").item(0).onclick = () => {
   const box = document.getElementsByName(
     "collection-name"
   )[0] as HTMLInputElement;
   const colName = box.value;
-  myCollection = new Collection<{
+  myCollection = myDatabase.addNewOrExistingCollection<{
     firstname: string;
     lastname: string;
     age: number;
@@ -44,7 +60,7 @@ document.getElementsByName("createCollection").item(0).onclick = () => {
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
-    html: colName + " collection created ... <br/>"
+    html: myCollection.message + " collection created ... <br/>"
   });
 };
 
