@@ -1,7 +1,6 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { doSomeStuff } from "./ts/playground";
 import { Collection, Database } from "./ts/generics";
 
 // my utils.ts file
@@ -18,8 +17,6 @@ const newDiv = addDivToDocument({
   html: gridHTML,
   document: document
 });
-
-let y = new doSomeStuff();
 
 let myCollection: Collection<any>;
 let myDatabase: Database;
