@@ -1,7 +1,7 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Collection, Database } from "./ts/generics";
+import { Collection, Database, Database$ } from "./ts/generics";
 
 // my utils.ts file
 import { addDivToDocument, addHtmlToDivsByClass } from "./ts/utils";
@@ -11,6 +11,7 @@ import "./styles/style.css";
 
 // my HTML
 import * as gridHTML from "./html/barebones.html";
+import { Observable, merge } from "rxjs";
 
 // add HTML to document as new <div>
 const newDiv = addDivToDocument({
@@ -30,18 +31,25 @@ addHtmlToDivsByClass({
 
 // when button1 is clicked do something
 document.getElementsByName("createDatabase").item(0).onclick = () => {
+
   const box = document.getElementsByName(
     "database-name"
   )[0] as HTMLInputElement;
   const dbName = box.value;
-  myDatabase = new Database(dbName);
-  addHtmlToDivsByClass({
-    outerElement: newDiv,
-    className: "output-box",
-    html: myDatabase.message + "<br/>"
+
+  Database$(dbName).subscribe(a => {
+    myDatabase = a;
+
+    myDatabase.message$.subscribe(m => {
+      addHtmlToDivsByClass({
+        outerElement: newDiv,
+        className: "output-box",
+        html: m + " ... <br/>"
+      });
+    });
+
   });
 };
-
 
 // when button1 is clicked do something
 document.getElementsByName("createCollection").item(0).onclick = () => {
@@ -49,15 +57,14 @@ document.getElementsByName("createCollection").item(0).onclick = () => {
     "collection-name"
   )[0] as HTMLInputElement;
   const colName = box.value;
-  myCollection = myDatabase.addNewOrExistingCollection<{
+  type myType = {
     firstname: string;
     lastname: string;
     age: number;
-  }>(colName);
-  addHtmlToDivsByClass({
-    outerElement: newDiv,
-    className: "output-box",
-    html: myCollection.message + " collection created ... <br/>"
+  };
+
+  myDatabase.addNewOrExistingCollection$<myType>(colName).subscribe(c => {
+    myCollection = c;
   });
 };
 
@@ -81,13 +88,14 @@ document.getElementsByName("addDocument").item(0).onclick = () => {
     className: "output-box",
     html: firstname + " " + lastname + " added ... <br/>"
   });
-
 };
 
 // when button2 is clicked do something else
 document.getElementsByName("outputCollection").item(0).onclick = () => {
   let docString: string = "";
-  myCollection.documents.map(doc => (docString += JSON.stringify(doc) + "<br/>"));
+  myCollection.documents.map(
+    doc => (docString += JSON.stringify(doc) + "<br/>")
+  );
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
