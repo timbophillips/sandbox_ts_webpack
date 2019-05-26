@@ -19,7 +19,13 @@ const newDiv = addDivToDocument({
   document: document
 });
 
-let myCollection: Collection<any>;
+type myType = {
+  firstname: string;
+  lastname: string;
+  age: number;
+};
+
+let myCollection: Collection<myType>;
 let myDatabase: Database;
 
 // write testing 456 in all "target" elements
@@ -31,7 +37,6 @@ addHtmlToDivsByClass({
 
 // when button1 is clicked do something
 document.getElementsByName("createDatabase").item(0).onclick = () => {
-
   const box = document.getElementsByName(
     "database-name"
   )[0] as HTMLInputElement;
@@ -40,14 +45,13 @@ document.getElementsByName("createDatabase").item(0).onclick = () => {
   Database$(dbName).subscribe(a => {
     myDatabase = a;
 
-    myDatabase.message$.subscribe(m => {
+    myDatabase.message$().subscribe(m => {
       addHtmlToDivsByClass({
         outerElement: newDiv,
         className: "output-box",
         html: m + " ... <br/>"
       });
     });
-
   });
 };
 
@@ -57,14 +61,17 @@ document.getElementsByName("createCollection").item(0).onclick = () => {
     "collection-name"
   )[0] as HTMLInputElement;
   const colName = box.value;
-  type myType = {
-    firstname: string;
-    lastname: string;
-    age: number;
-  };
 
   myDatabase.addNewOrExistingCollection$<myType>(colName).subscribe(c => {
     myCollection = c;
+    myCollection.documents$().subscribe(x => {
+      addHtmlToDivsByClass({
+        outerElement: newDiv,
+        className: "docs-box",
+        html: "<code>" + JSON.stringify(x) + "</code><br/>",
+        overwrite: true
+      });
+    });
   });
 };
 
@@ -75,30 +82,19 @@ document.getElementsByName("addDocument").item(0).onclick = () => {
   const boxAge = document.getElementsByName("age")[0] as HTMLInputElement;
   const firstname = boxFn.value;
   const lastname = boxLn.value;
-  const age = boxAge.value;
+  const age = boxAge.value.t
 
-  myCollection.addDocument({
-    firstname: firstname,
-    lastname: lastname,
-    age: age
-  });
+  myCollection
+    .addDocument$({
+      firstname: firstname,
+      lastname: lastname,
+      age:  age
+    })
+    .subscribe(x => console.log(JSON.stringify(x)));
 
   addHtmlToDivsByClass({
     outerElement: newDiv,
     className: "output-box",
     html: firstname + " " + lastname + " added ... <br/>"
-  });
-};
-
-// when button2 is clicked do something else
-document.getElementsByName("outputCollection").item(0).onclick = () => {
-  let docString: string = "";
-  myCollection.documents.map(
-    doc => (docString += JSON.stringify(doc) + "<br/>")
-  );
-  addHtmlToDivsByClass({
-    outerElement: newDiv,
-    className: "output-box",
-    html: docString
   });
 };

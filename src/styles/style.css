@@ -18,7 +18,7 @@ h3 {
   margin-top: 1rem;
   margin-bottom: 0;
 }
-.output-box {
+.output-box, .docs-box {
   margin-left: 1rem;
   margin-right: 1rem;
   padding-top: 1rem;

@@ -17,15 +17,21 @@ const addDivToDocument = ({
 const addHtmlToDivsByClass = ({
   outerElement,
   className,
-  html
+  html,
+  overwrite
 }: {
   outerElement: HTMLElement;
   className: string;
   html: string;
+  overwrite?: boolean;
 }): HTMLCollectionOf<Element> => {
   const items = outerElement.getElementsByClassName(className);
   for (let item of items) {
-    item.innerHTML += html;
+    if (overwrite) {
+      item.innerHTML = html;
+    } else {
+      item.innerHTML += html;
+    }
   }
   return items;
 };

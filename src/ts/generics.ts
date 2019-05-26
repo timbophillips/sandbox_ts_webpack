@@ -16,6 +16,7 @@ export class Collection<T extends AnyJson> {
   // with type defined as the submitted type T (json schema) ...
   // *plus* the special fields we're putting in it
   private _documents: Array<T & hbDbFields>;
+  private _documents$: BehaviorSubject<Array<T & hbDbFields>>;
 
   // constructor recieves the string name of the doctype
   constructor(
@@ -24,37 +25,33 @@ export class Collection<T extends AnyJson> {
   ) {
     // needed to initialize the array
     this._documents = [];
+    this._documents$ = new BehaviorSubject<Array<T & hbDbFields>>([]);
   }
 
-  // returns the array of documents
-  // ** TODO: make this read only (how best to do that?)
-  get documents(): Array<T & hbDbFields> {
-    return JSON.parse(JSON.stringify(this._documents));
-  }
+  documents$ = (): Observable<Array<T & hbDbFields>> =>
+    this._documents$.asObservable();
 
-  logdocs(): void {
-    const log = JSON.stringify(this._documents);
-  }
+  addDocument$ = (doc: T): Observable<T & hbDbFields> =>
+    of(this._addDocument(doc));
 
   // adding a document, typechecked to be same as json schema type T
   // the doctype and modstamp are then added
-  addDocument(doc: T): T & hbDbFields {
+  private _addDocument(doc: T): T & hbDbFields {
     const hbDoc = Object.assign(doc, {
       doctype: this.doctype,
       modstamp: new Date().toJSON()
     });
     this._documents.push(hbDoc);
+    this._documents$.next(this._documents);
     return hbDoc;
   }
 
-  get recycled(): Collection<T> {
-    return this;
-  }
+  recycled = (): Collection<T> => this;
 }
 
 export class Database {
+  private _name: string = "";
   private _collections: Array<Collection<any>> = [];
-  private _message: string = "";
   private _message$: BehaviorSubject<string>;
 
   constructor(public readonly name: string) {
@@ -64,11 +61,9 @@ export class Database {
     this._message$.next("new database created named " + name);
   }
 
-  get message$(): Observable<string> {
-    return this._message$.asObservable();
-  }
+  message$ = (): Observable<string> => this._message$.asObservable();
 
-  public addNewOrExistingCollection$ = <T extends AnyJson>(
+  addNewOrExistingCollection$ = <T extends AnyJson>(
     name: string
   ): Observable<Collection<T>> => {
     const existingCollection = this._collections.find(x => x.doctype === name);
@@ -79,7 +74,7 @@ export class Database {
           ", inside database: " +
           this.name
       );
-      return of(existingCollection.recycled);
+      return of(existingCollection.recycled());
     } else {
       const newCollection = new Collection<T>(name, this);
       this._collections.push(newCollection);
@@ -92,10 +87,6 @@ export class Database {
       return of(newCollection);
     }
   };
-
-  get message(): string {
-    return new Date().toUTCString() + ": " + this._message + "\n";
-  }
 }
 
 export const Database$ = (name: string): Observable<Database> => {
