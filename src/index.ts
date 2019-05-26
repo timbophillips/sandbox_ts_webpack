@@ -82,7 +82,7 @@ document.getElementsByName("addDocument").item(0).onclick = () => {
   const boxAge = document.getElementsByName("age")[0] as HTMLInputElement;
   const firstname = boxFn.value;
   const lastname = boxLn.value;
-  const age = boxAge.value.t
+  const age = boxAge.valueAsNumber;
 
   myCollection
     .addDocument$({
