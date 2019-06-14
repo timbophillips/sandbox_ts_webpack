@@ -58,13 +58,12 @@ class boxForObs {
     max-height: 40rem;
   }
   `
-
-
+  
   constructor(private document: Document) {
   }
   
   component = () => {
-    const element = document.createElement("div");
+    const element = this.document.createElement("div");
     element.innerHTML = this._template;
     element.setAttribute("style", this._style);
     return element
