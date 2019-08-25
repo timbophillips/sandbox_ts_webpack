@@ -19,6 +19,7 @@ export class Collection<T extends AnyJson> {
   private _documents$: BehaviorSubject<Array<T & hbDbFields>>;
 
   // constructor recieves the string name of the doctype
+  // and the database it is part of
   constructor(
     public readonly doctype: string,
     public readonly database: Database
@@ -50,7 +51,6 @@ export class Collection<T extends AnyJson> {
 }
 
 export class Database {
-  private _name: string = "";
   private _collections: Array<Collection<any>> = [];
   private _message$: BehaviorSubject<string>;
 
